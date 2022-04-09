@@ -54,17 +54,21 @@ EOT;
             echo ' <a class="nav-item nav-link" href="loginForm.php">Login</a>';
             echo ' <a class="nav-item nav-link" href="./signup.php">Signup</a>';
           }
-          else
+          else if(isset($_SESSION['name']) && !isset($_SESSION['admin']))
           {
-            echo '<a class="nav-item nav-link" href="summary.php">Summary</a>';
-            echo '<a class="nav-item nav-link" href="entry.php">New Entry</a>';
+            echo '<a class="nav-item nav-link" href="infoSummary.php">Contact Information</a>';
+            echo '<a class="nav-item nav-link" href="infoEntry.php">Enter New Contact</a>';
+            echo '<a class="nav-item nav-link" href="questionSummary.php">Questions</a>';
+            echo '<a class="nav-item nav-link" href="questionEntry.php">Enter New Question</a>';
             echo '<a class="nav-item nav-link" href="logout.php">Logout</a>';
           }
-       if(isset($_SESSION['admin']))
-       {
-          echo '<a class="nav-item nav-link" href="./summary.php">Summary</a>';
-          echo '<a class="nav-item nav-link" href="./users.php">Users</a>';
-       }
+          else if(isset($_SESSION['admin']))
+          {
+            echo '<a class="nav-item nav-link" href="./infoSummaryAdmin.php">Contact Information</a>';
+            echo '<a class="nav-item nav-link" href="./infoUsers.php">Users Information</a>';
+            echo '<a class="nav-item nav-link" href="questionSummaryAdmin.php">Questions</a>';
+            echo '<a class="nav-item nav-link" href="logout.php">Logout</a>';
+          }
           
         
          echo<<<EOT
