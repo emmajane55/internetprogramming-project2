@@ -1,7 +1,7 @@
 <?php
 session_start();
-if(!isset($_SESSION["name"]))
-  die("You must login to access the page");
+if(!isset($_SESSION["admin"]))
+  die("You must login to admin to access the page");
 ?>
 <!doctype html>
 <html lang="en">
@@ -13,7 +13,7 @@ if(!isset($_SESSION["name"]))
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>New Question</title>
+    <title>Modify Question</title>
   </head>
   <body>
     <div class = "container">
@@ -22,24 +22,22 @@ if(!isset($_SESSION["name"]))
     //create header
     require_once 'pageFormatSession.php';
 
-    $pageTitle = "QUESTION";
+    $pageTitle = "MODIFY";
     $img = "./images/logo1.jfif";
     pageHeaderSession($pageTitle,$img);
 
+    require_once 'security.php';
+    $input = sanitizeString($_POST["mBtn"]);
+    $values = explode("*", $input);
+    $cid = $values[0];
+    $ques = $values[1];
+    echo"<p>contactID: $cid</p>";
+    echo"<p>question: $ques</p>";
+    echo"<form action=\"./questionAdminHandler.php\" method = \"POST\"><label for=\"status\">Status:</label><br><input type=\"text\" id=\"status\" name=\"status\"><br>";
+    echo"<button type=\"submit\" class=\"btn btn-primary\" id=\"button\" name=\"button\" value=\"$input\">Modify Status</button></form>";
+
     ?>
-
-    <!--display form to sign up-->
-    <form action="./questionHandler.php" method = "POST" onsubmit="return validate(this)">
-    <label for="contact">contactID:</label><br>
-    <input type="text" id="contact" name="contact" onblur="validateContact(this)" placeholder="Enter contact ID"><br>
-    <p id="contactmsg"></p>
-    <label for="question">Question:</label><br>
-    <input type="text" id="question" name="question" onblur="validateQuestion(this)" placeholder="Enter Question"><br>
-    <p id="questionmsg"></p>
-    <input type="submit" value="Submit">
-    </form> 
-
-    <script type="text/javascript" src="./js/validationQuestion.js"></script>
+    
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

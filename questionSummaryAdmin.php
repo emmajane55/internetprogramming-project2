@@ -57,8 +57,9 @@ if(!isset($_SESSION["admin"]))
       $cid = $row["contactID"];
       $q = $row["question"];
       $s = $row["status"];
+      $all = "$cid*$q";
       echo"<tr><td>$cid</td><td>$q</td><td>$s</td>";
-      //add button to modify question status
+      echo"<td><form action=\"./questionAdminForm.php\" method = \"POST\"><button type=\"submit\" class=\"btn btn-primary\" id=\"mBtn\" name=\"mBtn\" value=\"$all\">Modify Question</button></form></td>";
       echo"</tr>";
     }
 

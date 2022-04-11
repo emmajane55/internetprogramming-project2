@@ -1,7 +1,7 @@
 <?php
 session_start();
-if(!isset($_SESSION["name"]))
-  die("You must login to access the page");
+if(!isset($_SESSION["admin"]))
+  die("You must login to admin to access the page");
 ?>
 <!doctype html>
 <html lang="en">
@@ -13,33 +13,43 @@ if(!isset($_SESSION["name"]))
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>New Question</title>
+    <title>Modify Question</title>
   </head>
   <body>
     <div class = "container">
 
     <?php
-    //create header
     require_once 'pageFormatSession.php';
 
-    $pageTitle = "QUESTION";
+    $pageTitle = "MODIFY";
     $img = "./images/logo1.jfif";
     pageHeaderSession($pageTitle,$img);
 
-    ?>
+    require_once 'connection.php';
+    $conn = connect_db();
 
-    <!--display form to sign up-->
-    <form action="./questionHandler.php" method = "POST" onsubmit="return validate(this)">
-    <label for="contact">contactID:</label><br>
-    <input type="text" id="contact" name="contact" onblur="validateContact(this)" placeholder="Enter contact ID"><br>
-    <p id="contactmsg"></p>
-    <label for="question">Question:</label><br>
-    <input type="text" id="question" name="question" onblur="validateQuestion(this)" placeholder="Enter Question"><br>
-    <p id="questionmsg"></p>
-    <input type="submit" value="Submit">
-    </form> 
+    #clean input
+    require_once 'security.php';
+    $status = sanitizeString($_POST["status"]);
+    $values = explode("*", sanitizeString($_POST["button"]));
 
-    <script type="text/javascript" src="./js/validationQuestion.js"></script>
+    //use input to login
+    $query = "UPDATE questions SET status=\"$status\" WHERE contactID=\"$values[0]\" AND question=\"$values[1]\"";
+    $conn->query($query);
+    $query = "SELECT * FROM questions WHERE contactID = \"$values[0]\" AND question = \"$values[1]\" AND status = \"$status\"";
+    $result = $conn->query($query);
+    if(!$result) 
+      die("Fatal error on query");
+    $rows = $result->num_rows;
+    if($rows > 0)
+    {
+      header('Location: ./questionSummaryAdmin.php');
+    }
+    else
+      echo "<h2 class=\"text-danger\">Modify status failed! Try again!</h2>";
+    $conn->close();
+
+    ?> 
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

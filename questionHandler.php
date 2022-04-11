@@ -19,27 +19,39 @@ if(!isset($_SESSION["name"]))
     <div class = "container">
 
     <?php
-    //create header
     require_once 'pageFormatSession.php';
 
     $pageTitle = "QUESTION";
     $img = "./images/logo1.jfif";
     pageHeaderSession($pageTitle,$img);
 
-    ?>
+    require_once 'connection.php';
+    $conn = connect_db();
 
-    <!--display form to sign up-->
-    <form action="./questionHandler.php" method = "POST" onsubmit="return validate(this)">
-    <label for="contact">contactID:</label><br>
-    <input type="text" id="contact" name="contact" onblur="validateContact(this)" placeholder="Enter contact ID"><br>
-    <p id="contactmsg"></p>
-    <label for="question">Question:</label><br>
-    <input type="text" id="question" name="question" onblur="validateQuestion(this)" placeholder="Enter Question"><br>
-    <p id="questionmsg"></p>
-    <input type="submit" value="Submit">
-    </form> 
+    #clean input
+    require_once 'security.php';
+    $contact = sanitizeString($_POST["contact"]);
+    $question = sanitizeString($_POST["question"]);
+    $systemID = $_SESSION["name"];
+    $status = "new";
 
-    <script type="text/javascript" src="./js/validationQuestion.js"></script>
+    //use input to login
+    $query = "INSERT INTO questions(systemID, contactID, question, status) VALUES (\"$systemID\",\"$contact\",\"$question\",\"$status\")";
+    $conn->query($query);
+    $query = "SELECT * FROM questions WHERE systemID = \"$systemID\" AND contactID = \"$contact\" AND question = \"$question\"";
+    $result = $conn->query($query);
+    if(!$result) 
+      die("Fatal error on query");
+    $rows = $result->num_rows;
+    if($rows > 0)
+    {
+      header('Location: ./questionSummary.php');
+    }
+    else
+      echo "<h2 class=\"text-danger\">New question failed! Try again!</h2>";
+    $conn->close();
+
+    ?> 
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
