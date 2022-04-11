@@ -26,6 +26,11 @@ function validateQuestion(id)
 		msg.innerHTML = "Question cannot be empty!";
 		msg.className = "text-danger";
 	}
+	else if((/[*]/.test(field)))
+	{
+		msg.innerHTML = "Question cannot contain '*'!";
+		msg.className = "text-danger";
+	}
 	else
 		good = true;
 
