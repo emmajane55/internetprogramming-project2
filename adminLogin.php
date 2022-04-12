@@ -21,8 +21,8 @@
     ?>  
 
    <form action="./adminLoginHandler.php" method="POST">
-    <label for="email">Email:</label><br>
-    <input type="text" id="email" name="email" ><br>
+    <label for="userID">Username:</label><br>
+    <input type="text" id="userID" name="userID" ><br>
     <label for="pwd">Password:</label><br>
     <input type="password" id="pwd" name="pwd" ><br><br>
     <input type="submit" value="Login">
