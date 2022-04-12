@@ -42,7 +42,7 @@
       {
 
         $row=$result->fetch_array(MYSQLI_ASSOC);
-        $username=$row["name"];
+        $username=$row["userID"];
         $_SESSION['name']=$username;
         $_SESSION['admin']=$username;
 
