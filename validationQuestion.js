@@ -2,18 +2,19 @@
 
 function validateContact(id)
 {
+    /*
 	let field = id.value;
 	let good = false;
 	let msg = document.getElementById("contactmsg");
 	if(field == "")
 	{
-		msg.innerHTML = "Contact ID cannot be empty!";
-		msg.className = "text-danger";
+		//msg.innerHTML = "Contact ID cannot be empty!";
+		//msg.className = "text-danger";
 	}
 	else
-		good = true;
+		good = true;*/
 
-	return good;
+	return true;
 }
 
 function validateQuestion(id)

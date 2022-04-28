@@ -16,7 +16,7 @@
     require_once 'pageFormatSession.php';
 
     $pageTitle="ADMIN LOGIN";
-    $logo="./images/admin.jpg";
+    $logo="./images/logo.jpg";
     pageHeaderSession($pageTitle,$logo);
     ?>  
 

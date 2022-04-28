@@ -29,11 +29,14 @@ if(!isset($_SESSION["admin"]))
     echo("<form action=\"./questionSummaryAdminHandler.php\" method=\"POST\"><input type=\"text\" id=\"searchable\" name=\"searchable\"><input type=\"submit\" class=\"btn btn-primary\" value=\"Search\"></form>");
     echo("<a class=\"btn btn-primary\" href=\"questionSummaryAdmin.php\">Refresh</a>");
 
+    $searching=$_POST["searchable"];
+    $tosearch = "%" . $searching . "%";
+
     require_once 'connection.php';
     $conn = connect_db();
 
     //get questions from database and display
-    $query = "SELECT * FROM questions";
+    $query = "SELECT * FROM questions WHERE question LIKE '$tosearch'";
     $result = $conn->query($query);
     if(!$result) die("Fatal error on query");
  
@@ -53,75 +56,28 @@ if(!isset($_SESSION["admin"]))
 
     _END;
 
-    $countRows = 0;
-    $rowName = "questionRow";
-    $loopsCount = 0;
-    $showingLoops = 1;
+    echo"<tbody>";
 
-    echo"<tbody id=\"questionRow\">";
-
-    if($rows <= 10)
+    for($i=0; $i<$rows; $i++)
     {
-      for($i=0; $i<$rows; $i++)
-      {
-        $row = $result->fetch_array(MYSQLI_ASSOC);
-        $cid = $row["contactID"];
-        $q = $row["question"];
-        $t = $row["time"];
-        $s = $row["status"];
-        $all = "$cid*$q";
-        echo"<tr><td>$cid</td><td>$q</td><td>$t</td><td>$s</td>";
-        echo"<td><form action=\"./questionAdminForm.php\" method = \"POST\"><button type=\"submit\" class=\"btn btn-primary\" id=\"mBtn\" name=\"mBtn\" value=\"$all\">Modify Question</button></form></td>";
-        echo"</tr>";
-      }
-    }
-    else
-    {
-      //echo("<div id=\"$rowName\">");
-
-      for($i=0; $i<$rows; $i++)
-      {
-        $countRows++;
-
-        $row = $result->fetch_array(MYSQLI_ASSOC);
-        $cid = $row["contactID"];
-        $q = $row["question"];
-        $t = $row["time"];
-        $s = $row["status"];
-        $all = "$cid*$q";
-        echo"<tr class= \"col-12\"><td>$cid</td><td>$q</td><td>$t</td><td>$s</td>";
-        echo"<td><form action=\"./questionAdminForm.php\" method = \"POST\"><button type=\"submit\" class=\"btn btn-primary\" id=\"mBtn\" name=\"mBtn\" value=\"$all\">Modify Question</button></form></td>";
-        echo"</tr>";
-
-        if($countRows == 10)
-        {
-          $loopsCount++;
-          echo("</tbody><tbody style=\"display:none\" id=\"questionRow$loopsCount\">");
-          $countRows = 0;
-        }
-        else if($i == $rows-1)
-        {
-          $loopsCount++;
-        }
-      }
-      //echo("</tbody>");
+      $row = $result->fetch_array(MYSQLI_ASSOC);
+      $cid = $row["contactID"];
+      $q = $row["question"];
+      $t = $row["time"];
+      $s = $row["status"];
+      $all = "$cid*$q";
+      echo"<tr><td>$cid</td><td>$q</td><td>$t</td><td>$s</td>";
+      echo"<td><form action=\"./questionAdminForm.php\" method = \"POST\"><button type=\"submit\" class=\"btn btn-primary\" id=\"mBtn\" name=\"mBtn\" value=\"$all\">Modify Question</button></form></td>";
+      echo"</tr>";
     }
 
     $conn->close();
 
-    echo "</tbody</table>";
-    echo "<p style=\"display:none\" id=\"pLoop\">$showingLoops</p>";
-
-    if($rows > 10)
-    {
-      echo "<button type=\"button\" class=\"btn btn-primary\" id=\"qButton\" onclick=\"summaryButton($loopsCount)\">Show More</button>";
-    }
-    
-    //echo "$rowName$loopsCount";
+    echo "</tbody></table>";
 
     ?>
 
-    <script type="text/javascript" src="js/summary.js"></script>
+    <script type="text/javascript" src="js/searchQuestion.js"></script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

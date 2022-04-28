@@ -23,7 +23,7 @@ if(!isset($_SESSION["name"]))
     require_once 'pageFormatSession.php';
 
     $pageTitle = "QUESTIONS";
-    $img = "./images/admin.jpg";
+    $img = "./images/logo.jpg";
     pageHeaderSession($pageTitle,$img);
 
     require_once 'connection.php';
@@ -31,7 +31,7 @@ if(!isset($_SESSION["name"]))
 
     //get questions from database and display
     $name = "name";
-    $query = "SELECT contactID, question, status FROM questions where systemID = \"$_SESSION[$name]\"";
+    $query = "SELECT contactID, question, time, status FROM questions where userID = \"$_SESSION[$name]\"";
     $result = $conn->query($query);
     if(!$result) die("Fatal error on query");
  
@@ -44,6 +44,7 @@ if(!isset($_SESSION["name"]))
         <tr>
           <th scope="col">ContactID</th>
           <th scope="col">Question</th>
+          <th scope="col">Time</th>
           <th scope="col">Status</th>
         </tr>
       </thead>
@@ -57,8 +58,9 @@ if(!isset($_SESSION["name"]))
       $row = $result->fetch_array(MYSQLI_ASSOC);
       $cid = $row["contactID"];
       $q = $row["question"];
+      $t = $row["time"];
       $s = $row["status"];
-      echo"<tr><td>$cid</td><td>$q</td><td>$s</td></tr>";
+      echo"<tr><td>$cid</td><td>$q</td><td>$t</td><td>$s</td></tr>";
     }
 
     $conn->close();

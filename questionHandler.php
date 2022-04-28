@@ -22,7 +22,7 @@ if(!isset($_SESSION["name"]))
     require_once 'pageFormatSession.php';
 
     $pageTitle = "QUESTION";
-    $img = "./images/logo1.jfif";
+    $img = "./images/logo.jpg";
     pageHeaderSession($pageTitle,$img);
 
     require_once 'connection.php';
@@ -36,9 +36,9 @@ if(!isset($_SESSION["name"]))
     $status = "new";
 
     //use input to login
-    $query = "INSERT INTO questions(systemID, contactID, question, status) VALUES (\"$systemID\",\"$contact\",\"$question\",\"$status\")";
+    $query = "INSERT INTO questions(userID, contactID, question, status) VALUES (\"$systemID\",\"$contact\",\"$question\",\"$status\")";
     $conn->query($query);
-    $query = "SELECT * FROM questions WHERE systemID = \"$systemID\" AND contactID = \"$contact\" AND question = \"$question\"";
+    $query = "SELECT * FROM questions WHERE userID = \"$systemID\" AND contactID = \"$contact\" AND question = \"$question\"";
     $result = $conn->query($query);
     if(!$result) 
       die("Fatal error on query");

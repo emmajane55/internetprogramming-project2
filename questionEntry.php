@@ -23,7 +23,7 @@ if(!isset($_SESSION["name"]))
     require_once 'pageFormatSession.php';
 
     $pageTitle = "QUESTION";
-    $img = "./images/logo1.jfif";
+    $img = "./images/logo.jpg";
     pageHeaderSession($pageTitle,$img);
 
     ?>

@@ -13,7 +13,7 @@
 	require_once 'pageFormatSession.php';
 
     $pageTitle="Sign up";
-    $logo="./images/logo1.jpeg";
+    $logo="./images/logo.jpg";
     pageHeaderSession($pageTitle,$logo);
 
 
@@ -24,10 +24,12 @@
 <form action="./signUpHandler.php" method="POST">
     <label for="Username">Username:</label><br>
     <input type="text" id="Username" name="Username" ><br>
-    <label for="name">Name:</label><br>
-    <input type="text" id="name" name="name" ><br>
     <label for="pwd">Password:</label><br>
     <input type="text" id="pwd" name="pwd" ><br>
+    <label for="Name">Name:</label><br>
+    <input type="text" id="name" name="name" ><br>
+    <label for="Email">Email:</label><br>
+    <input type="text" id="Email" name="Email" ><br>
     <input type="submit" value="Login">
   </form>
 

@@ -17,16 +17,16 @@
     require_once 'pageFormatSession.php';
 
     $pageTitle="LOGIN";
-    $logo="./images/logo1.jpeg";
+    $logo="./images/logo.jpg";
     pageHeaderSession($pageTitle,$logo);
 
     require_once 'connection.php';      
      $conn=connect_db();
     
      $userID=$_POST["userID"];
-    $pwd=$_POST["password"];
+    $pwd=$_POST["pwd"];
 
-     $query = "SELECT * FROM users WHERE userID=\"$userID\" AND password=SHA1(\"$pwd\")";
+     $query = "SELECT * FROM users WHERE userName=\"$userID\" AND password=SHA1(\"$pwd\")";
      $result=$conn->query($query);
      
      if(!$result)
@@ -39,9 +39,9 @@
       {
         $row=$result->fetch_array(MYSQLI_ASSOC);
         $username=$row["name"];
-        $sid = $row["systemID"];
+        $sid = $row["userID"];
         $_SESSION['name'] = $sid;
-        echo "<h3>weclome back! $username </h3>";
+        echo "<h3>welcome back! $username </h3>";
       }
       else
       {

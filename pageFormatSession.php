@@ -38,13 +38,14 @@ session_start();
   </head>
   <body>
   	<?php
+
+    //<h2 class="mt-2">$title</h2>
   	
     function pageHeaderSession($title,$img)
     {
        echo<<<EOT
         <div class="row">
           <img src="$img"  class="img-fluid col-2" >
-          <h2 class="mt-2">$title</h2>
           <nav class="navbar ">
           <!-- Navbar content -->
               <a class="nav-item nav-link active" href="./index.php">Home <span class="sr-only">(current)</span></a>

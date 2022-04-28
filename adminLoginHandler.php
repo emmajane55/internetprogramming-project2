@@ -15,19 +15,19 @@
     require_once 'pageFormatSession.php';
 
     $pageTitle="ADMIN LOGIN";
-    $logo="./images/admin.jpg";
+    $logo="./images/logo.jpg";
     pageHeaderSession($pageTitle,$logo);
 
  
 
     $userID=$_POST["userID"];
-    $password=$_POST["password"];
+    $password=$_POST["pwd"];
 
     require_once 'connection.php';      
      $conn=connect_db();
 
      //echo $email. " :".$pwd;
-     $query = "SELECT * FROM admin WHERE userID=\"$userID\" AND password=SHA1(\"$password\")";
+     $query = "SELECT * FROM admin WHERE userName=\"$userID\" AND password=SHA1(\"$password\")";
      $result=$conn->query($query);
      
      if(!$result)
@@ -36,13 +36,13 @@
      }
 
      $rows=$result->num_rows;
-     echo $rows;
+     //echo $rows;
 
      if($rows==1)
       {
 
         $row=$result->fetch_array(MYSQLI_ASSOC);
-        $username=$row["userID"];
+        $username=$row["userName"];
         $_SESSION['name']=$username;
         $_SESSION['admin']=$username;
 

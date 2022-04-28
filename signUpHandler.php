@@ -14,19 +14,19 @@
     require_once 'pageFormatSession.php';
 
     $pageTitle="Sign up handler";
-    $logo="./images/logo1.jpeg";
+    $logo="./images/logo.jpg";
     pageHeaderSession($pageTitle,$logo);
 
     $userID=$_POST["Username"];
     $password=$_POST["pwd"];
     $name=$_POST["name"];
-    //$pwd =$_POST["pwd"];
-    
+    $email=$_POST["Email"];
+   
     
 
     require_once 'connection.php';      
      $conn=connect_db();
-     $query= "INSERT INTO users(userID, password, name) VALUES (\"$userID\",SHA1(\"$pwd\"),\"$name\")";
+     $query= "INSERT INTO users(userName, password, name, email) VALUES (\"$userID\",SHA1(\"$password\"),\"$name\",\"$email\")";
      $result=$conn->query($query);
      
      if(!$result)
@@ -35,7 +35,7 @@
      }
      else
      {
-        echo "you are all signed up";
+        echo "You are all signed up";
      }
 
 

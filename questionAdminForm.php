@@ -23,7 +23,7 @@ if(!isset($_SESSION["admin"]))
     require_once 'pageFormatSession.php';
 
     $pageTitle = "MODIFY";
-    $img = "./images/logo1.jfif";
+    $img = "./images/logo.jpg";
     pageHeaderSession($pageTitle,$img);
 
     require_once 'security.php';

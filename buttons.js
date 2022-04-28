@@ -11,3 +11,4 @@ function menuButton()
 		document.getElementById('links').style.display='none';
 	}
 }
+
