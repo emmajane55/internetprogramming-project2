@@ -57,8 +57,7 @@ EOT;
           }
           else if(isset($_SESSION['name']) && !isset($_SESSION['admin']))
           {
-            echo '<a class="nav-item nav-link" href="infoSummary.php">Contact Information</a>';
-            echo '<a class="nav-item nav-link" href="infoEntry.php">Enter New Contact</a>';
+            echo '<a class="nav-item nav-link" href="profile.php">Profile</a>';
             echo '<a class="nav-item nav-link" href="questionSummary.php">Questions</a>';
             echo '<a class="nav-item nav-link" href="questionEntry.php">Enter New Question</a>';
             echo '<a class="nav-item nav-link" href="logout.php">Logout</a>';

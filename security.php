@@ -13,7 +13,7 @@
 
 	function sanitizeString($s)
 	{
-		if(get_magic_quotes_gpc())
+		//if(get_magic_quotes_gpc())
 			$s = stripslashes($s);
 		$s = strip_tags($s);
 		$s = htmlentities($s);
