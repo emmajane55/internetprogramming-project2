@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 11, 2022 at 03:54 AM
+-- Generation Time: Apr 26, 2022 at 04:19 AM
 -- Server version: 10.4.22-MariaDB
--- PHP Version: 7.4.27
+-- PHP Version: 8.1.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `adminID` int(11) NOT NULL,
-  `userID` char(100) NOT NULL,
+  `userName` char(100) NOT NULL,
   `password` char(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -40,7 +40,7 @@ CREATE TABLE `admin` (
 --
 
 CREATE TABLE `info` (
-  `systemID` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
   `contactID` int(11) NOT NULL,
   `contactName` char(200) NOT NULL,
   `emailAddress` char(200) NOT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE `info` (
 -- Dumping data for table `info`
 --
 
-INSERT INTO `info` (`systemID`, `contactID`, `contactName`, `emailAddress`, `addressLine1`, `addressLine2`, `addressLine3`, `city`, `state`, `zip`, `country`) VALUES
+INSERT INTO `info` (`userID`, `contactID`, `contactName`, `emailAddress`, `addressLine1`, `addressLine2`, `addressLine3`, `city`, `state`, `zip`, `country`) VALUES
 (1, 1, 'tester1', 'test1@test.com', 'test rd', '', '', 'milledgeville', 'GA', 12345, 'USA'),
 (2, 2, 'tester2contact', 'test2@test.com', 'test drive', '', '', 'mcaon', 'GA', 54321, 'USA');
 
@@ -68,9 +68,10 @@ INSERT INTO `info` (`systemID`, `contactID`, `contactName`, `emailAddress`, `add
 --
 
 CREATE TABLE `questions` (
-  `systemID` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
   `contactID` int(11) NOT NULL,
   `question` text NOT NULL,
+  `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `status` char(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -78,9 +79,9 @@ CREATE TABLE `questions` (
 -- Dumping data for table `questions`
 --
 
-INSERT INTO `questions` (`systemID`, `contactID`, `question`, `status`) VALUES
-(1, 1, 'How do I fix this?', ''),
-(2, 2, 'My screen stopped working?', '');
+INSERT INTO `questions` (`userID`, `contactID`, `question`, `time`, `status`) VALUES
+(1, 1, 'How do I fix this?', '2022-04-26 01:43:49', ''),
+(2, 2, 'My screen stopped working?', '2022-04-26 01:43:49', '');
 
 -- --------------------------------------------------------
 
@@ -89,9 +90,10 @@ INSERT INTO `questions` (`systemID`, `contactID`, `question`, `status`) VALUES
 --
 
 CREATE TABLE `users` (
-  `systemID` int(11) NOT NULL,
-  `userID` char(100) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `userName` char(100) NOT NULL,
   `password` char(200) NOT NULL,
+  `email` varchar(200) NOT NULL,
   `name` char(200) NOT NULL,
   `notes` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -100,9 +102,11 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`systemID`, `userID`, `password`, `name`, `notes`) VALUES
-(1, 'test1', '4ff1a33e188b7b86123d6e3be2722a23514a83b4', 'tester1', ''),
-(2, 'test2', '8e59a08ba401da8aedd958b3a65c2d8e70dc8da2', 'tester2', '');
+INSERT INTO `users` (`userID`, `userName`, `password`, `email`, `name`, `notes`) VALUES
+(1, 'test1', '4ff1a33e188b7b86123d6e3be2722a23514a83b4', '', 'tester1', ''),
+(2, 'test2', '8e59a08ba401da8aedd958b3a65c2d8e70dc8da2', '', 'tester2', ''),
+(3, 'Retardo', 'da39a3ee5e6b4b0d3255bfef95601890afd80709', '', 'Retardo Milos', ''),
+(4, 'Retardo', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', '', 'Retardo Milos', '');
 
 --
 -- Indexes for dumped tables
@@ -124,7 +128,7 @@ ALTER TABLE `info`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`systemID`);
+  ADD PRIMARY KEY (`userID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -146,7 +150,7 @@ ALTER TABLE `info`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `systemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
