@@ -10,15 +10,13 @@
 
 	<title>Home</title>
 	<style>
-		body {background-color: #00b384;}
-		body {background-color: #0274ba;}
-		body {background-color: #4594c5;}
+		div {background-color: #4594c5;}
 		a {color: navy;}
 		
 	</style>
 </head>
-<body>
-	<div class="container">
+<body style = "background-color: #4594c5;">
+	<div class="container-fluid">
 
 	<?php
 

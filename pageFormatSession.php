@@ -34,6 +34,9 @@ session_start();
           font-size: 20px;
           margin: 8px 0;
       }
+      .row {
+        background-image: url("images/stock.jpg");
+      }
     </style>
   </head>
   <body>
@@ -64,8 +67,7 @@ EOT;
           }
           else if(isset($_SESSION['admin']))
           {
-            echo '<a class="nav-item nav-link" href="./infoSummaryAdmin.php">Contact Information</a>';
-            echo '<a class="nav-item nav-link" href="./infoUsers.php">Users Information</a>';
+            echo '<a class="nav-item nav-link" href="./infoSummaryAdmin.php">Users</a>';
             echo '<a class="nav-item nav-link" href="questionSummaryAdmin.php">Questions</a>';
             echo '<a class="nav-item nav-link" href="logout.php">Logout</a>';
           }
