@@ -34,7 +34,7 @@ session_start();
           font-size: 20px;
           margin: 8px 0;
       }
-      .row {
+      #pageHeader {
         background-image: url("images/stock.jpg");
       }
     </style>
@@ -47,7 +47,7 @@ session_start();
     function pageHeaderSession($title,$img)
     {
        echo<<<EOT
-        <div class="row">
+        <div class="row" id="pageHeader">
           <img src="$img"  class="img-fluid col-2" >
           <nav class="navbar ">
           <!-- Navbar content -->
