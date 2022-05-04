@@ -28,7 +28,7 @@ function validatePassword(id)
 	}
 	else
 	{
-		if(!(/^.{6,}$/.test(field)) && !(/\d+/.test(field)) && !(/[a-zA-Z]+/.test(field)))
+		if(!(/^.{6,}$/.test(field)) && !(/[0-9]+/.test(field)) && !(/[a-zA-Z]+/.test(field)))
 		{
 			msg.innerHTML = "Password is not correct!";
 			msg.className = "text-danger";
@@ -41,8 +41,8 @@ function validatePassword(id)
 
 function validate(id)
 {
-	let userid = document.getElementById("username");
-	let password = document.getElementById("password");
+	let userid = document.getElementById("userID");
+	let password = document.getElementById("pwd");
 	if(validateUsername(userid) && validatePassword(password))
 		return true;
 	else

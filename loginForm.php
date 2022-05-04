@@ -10,8 +10,8 @@
 
     <title>Login</title>
   </head>
-  <body>
-    <div class="container">
+  <body style ="background-color: #53b0e9;">
+  <div class= "container-fluid">
     <?php
 
     require_once 'pageFormatSession.php';
@@ -22,14 +22,18 @@
     ?>  
 
     
-  <form action="./loginHandler.php" method="POST">
+  <form action="./loginHandler.php" method="POST" onsubmit="return validate(this)">
 
     <label for="userID">userID:</label><br>
-    <input type="text" id="userID" name="userID" ><br>
+    <input type="text" id="userID" name="userID" onblur="validateUsername(this)"><br>
+    <p id="usernamemsg"></p>
     <label for="pwd">Password:</label><br>
-    <input type="password" id="pwd" name="pwd" ><br><br>
-    <input type="submit" value="Login">
+    <input type="password" id="pwd" name="pwd" onblur="validatePassword(this)"><br><br>
+    <p id="passwordmsg"></p>
+    <input type="submit" class="btn btn-primary" value="Login">
   </form>
+
+  <script type="text/javascript" src="./js/validationUsers.js"></script>
 
 <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -39,3 +43,4 @@
   </div>
 </body>
 </html>
+

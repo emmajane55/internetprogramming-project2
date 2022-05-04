@@ -15,8 +15,8 @@ if(!isset($_SESSION["admin"]))
 
     <title>User Information</title>
   </head>
-  <body>
-    <div class = "container">
+  <body style = "background-color: #53b0e9;">
+    <div class = "container-fluid">
 
     <?php
     //create header
@@ -82,12 +82,13 @@ if(!isset($_SESSION["admin"]))
         $countRows++;
 
         $row = $result->fetch_array(MYSQLI_ASSOC);
+        $uID = $row["userID"];
         $na = $row["name"];
         $em = $row["email"];
         $no = $row["notes"];
-        //$all = "$cid*$q";
-        echo"<tr class= \"col-12\"><td>$na</td><td>$em</td><td>$no</td>";
-        //echo"<td><form action=\"./questionAdminForm.php\" method = \"POST\"><button type=\"submit\" class=\"btn btn-primary\" id=\"mBtn\" name=\"mBtn\" value=\"$all\">Modify Question</button></form></td>";
+        $all = "$uID*$no";
+        echo"<tr><td>$na</td><td>$em</td><td>$no</td>";
+        echo"<td><form action=\"./infoAdminForm.php\" method = \"POST\"><button type=\"submit\" class=\"btn btn-primary\" id=\"mBtn\" name=\"mBtn\" value=\"$all\">Modify Notes</button></form><form action=\"./infoAdminDelete.php\" method = \"POST\"><button type=\"submit\" class=\"btn btn-primary\" id=\"clearB\" name=\"clearB\" value=\"$uID\">Clear Notes</button></form></td>";
         echo"</tr>";
 
         if($countRows == 10)

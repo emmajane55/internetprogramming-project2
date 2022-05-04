@@ -14,13 +14,35 @@ if(!isset($_SESSION["admin"]))
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <title>Submitted Questions</title>
+    <style>
+      #content { margin: 50px; } 
+a { text-decoration: none; }  
+ 
+.expandable {
+  background: #fff;
+  overflow: hidden;
+
+  transition: all .5s ease-in-out;
+  line-height: 0;
+  padding: 0 1em;
+  color: transparent;
+}
+ 
+.expandable:target {
+  line-height: 1.5;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  color: black;
+}
+</style>
   </head>
-  <body>
-    <div class = "container">
+  <body style = "background-color: #53b0e9;">
+    <div class = "container-fluid">
 
     <?php
     //create header
     require_once 'pageFormatSession.php';
+
 
     $pageTitle = "QUESTIONS";
     $img = "./images/logo.jpg";
@@ -44,7 +66,6 @@ if(!isset($_SESSION["admin"]))
     <table class="table table-hover">
       <thead>
         <tr>
-          <th scope="col">ContactID</th>
           <th scope="col">Question</th>
           <th scope="col">Time</th>
           <th scope="col">Status</th>
@@ -65,14 +86,16 @@ if(!isset($_SESSION["admin"]))
       for($i=0; $i<$rows; $i++)
       {
         $row = $result->fetch_array(MYSQLI_ASSOC);
-        $cid = $row["contactID"];
         $q = $row["question"];
         $t = $row["time"];
         $s = $row["status"];
         $all = "$cid*$q";
-        echo"<tr><td>$cid</td><td>$q</td><td>$t</td><td>$s</td>";
-        echo"<td><form action=\"./questionAdminForm.php\" method = \"POST\"><button type=\"submit\" class=\"btn btn-primary\" id=\"mBtn\" name=\"mBtn\" value=\"$all\">Modify Question</button></form></td>";
-        echo"</tr>";
+        $out=getContactInfo($cid);
+        
+
+        echo"<tr><td>$q</td><td>$t</td><td>$s</td>";
+        echo"<td><form action=\"./questionAdminForm.php\" method = \"POST\"><button type=\"submit\" class=\"btn btn-primary\" id=\"mBtn\" name=\"mBtn\" value=\"$all\">Modify Question</button></form></td> <td><a href=\"#$i\"><button class=\"btn btn-primary\" >Contact Information</button></a></td>";
+        echo"</tr><tr><td colspan=\"100\"><div class=\"expandable\" id=\"$i\">$out</div></td></tr>";
       }
     }
     else
@@ -89,9 +112,11 @@ if(!isset($_SESSION["admin"]))
         $t = $row["time"];
         $s = $row["status"];
         $all = "$cid*$q";
-        echo"<tr class= \"col-12\"><td>$cid</td><td>$q</td><td>$t</td><td>$s</td>";
-        echo"<td><form action=\"./questionAdminForm.php\" method = \"POST\"><button type=\"submit\" class=\"btn btn-primary\" id=\"mBtn\" name=\"mBtn\" value=\"$all\">Modify Question</button></form></td>";
-        echo"</tr>";
+        $out=getContactInfo($cid);
+
+        echo"<tr><td>$q</td><td>$t</td><td>$s</td>";
+        echo"<td><form action=\"./questionAdminForm.php\" method = \"POST\"><button type=\"submit\" class=\"btn btn-primary\" id=\"mBtn\" name=\"mBtn\" value=\"$all\">Modify Question</button></form></td> <td><a href=\"#$i\"><button class=\"btn btn-primary\" >Contact Information</button></a></td>";
+        echo"</tr><tr><td colspan=\"100\"><div class=\"expandable\" id=\"$i\">$out</div></td></tr>";
 
         if($countRows == 10)
         {
@@ -119,6 +144,52 @@ if(!isset($_SESSION["admin"]))
     
     //echo "$rowName$loopsCount";
 
+function getContactInfo($cid)
+    {
+      $conn = connect_db();
+      $query="SELECT * FROM info WHERE contactID=\"$cid\"";
+
+        $result=$conn->query($query);
+        $rows=$result->num_rows;
+
+
+     if($rows>0)
+      {
+        $row=$result->fetch_array(MYSQLI_ASSOC);
+      $ea = $row["emailAddress"];
+      $a1 = $row["addressLine1"];
+      $a2 = $row["addressLine2"];
+      $a3 = $row["addressLine3"];
+      $ci = $row["city"];
+      $st = $row["state"];
+      $zi = $row["zip"];
+      $co = $row["country"];
+      }
+      else
+      {
+      $ea = "";
+      $a1 = "";
+      $a2 = "";
+      $a3 = "";
+      $ci = "";
+      $st = "";
+      $zi = "";
+      $co = "";
+      }
+
+      //$out="<table class=\"table table-hover\">
+//<tr><td>$ea</td><td>$a1</td><td>$a2</td><td>$a3</td><td>$ci</td><td>$st</td><td>$zi</td><td>$co</td></tr></table> ";
+      //$out="<div class=\"row\"><div class=\"col-3\">$ea</div><div class=\"col-3\">$a1</div><div class=\"col-3\">$a1</div><div class=\"col-2\">$a1</div><div class=\"col-3\">$ci</div></div>";
+      $out="<div class=\"row\" style=\"background-color: #53b0e9;\"><table>
+  <tr>
+<td>$ea</td><td>$a1</td><td>$a2</td><td>$a3</td><td>$ci</td><td>$st</td><td>$zi</td><td>$co</td>
+  </tr>
+</table></div>";
+      $conn->close();
+      return $out;
+    }
+
+    
     ?>
 
     <script type="text/javascript" src="js/summary.js"></script>

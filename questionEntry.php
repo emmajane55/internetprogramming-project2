@@ -15,13 +15,14 @@ if(!isset($_SESSION["name"]))
 
     <title>New Question</title>
   </head>
-  <body>
-    <div class = "container">
+  <body style = "background-color: #53b0e9;">
+    <div class = "container-fluid">
 
     <?php
     //create header
     require_once 'pageFormatSession.php';
 
+    $id = $_SESSION["name"];
     $pageTitle = "QUESTION";
     $img = "./images/logo.jpg";
     pageHeaderSession($pageTitle,$img);
@@ -30,13 +31,13 @@ if(!isset($_SESSION["name"]))
 
     <!--display form to sign up-->
     <form action="./questionHandler.php" method = "POST" onsubmit="return validate(this)">
-    <label for="contact">contactID:</label><br>
-    <input type="text" id="contact" name="contact" onblur="validateContact(this)" placeholder="Enter contact ID"><br>
+    
+    <input type="hidden" id="contact" name="contact" onblur="validateContact(this)" placeholder="Enter contact ID" value="$id"><br>
     <p id="contactmsg"></p>
     <label for="question">Question:</label><br>
     <input type="text" id="question" name="question" onblur="validateQuestion(this)" placeholder="Enter Question"><br>
     <p id="questionmsg"></p>
-    <input type="submit" value="Submit">
+    <input type="submit" class="btn btn-primary" value="Submit">
     </form> 
 
     <script type="text/javascript" src="./js/validationQuestion.js"></script>

@@ -15,8 +15,8 @@ if(!isset($_SESSION["admin"]))
 
     <title>User Information</title>
   </head>
-  <body>
-    <div class = "container">
+  <body style = "background-color: #53b0e9;">
+    <div class = "container-fluid">
 
     <?php
     //create header

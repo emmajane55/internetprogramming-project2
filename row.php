@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION["name"]))
+if(!isset($_SESSION["admin"]))
   die("You must login to access the page");
 ?>
 <!doctype html>
@@ -13,45 +13,66 @@ if(!isset($_SESSION["name"]))
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>New Question</title>
+    <title>Row</title>
   </head>
   <body style = "background-color: #53b0e9;">
     <div class = "container-fluid">
 
     <?php
+    //create header
     require_once 'pageFormatSession.php';
 
-    $pageTitle = "QUESTION";
+    $pageTitle = "QUESTIONS";
     $img = "./images/logo.jpg";
     pageHeaderSession($pageTitle,$img);
 
     require_once 'connection.php';
     $conn = connect_db();
 
-    #clean input
-    require_once 'security.php';
-    $contact = sanitizeString($_POST["contact"]);
-    $question = sanitizeString($_POST["question"]);
-    $systemID = $_SESSION["name"];
-    $status = "new";
-
-    //use input to login
-    $query = "INSERT INTO questions(userID, contactID, question, status) VALUES (\"$systemID\",\"$contact\",\"$question\",\"$status\")";
-    $conn->query($query);
-    $query = "SELECT * FROM questions WHERE userID = \"$systemID\" AND contactID = \"$contact\" AND question = \"$question\"";
+    //get questions from database and display
+    $query = "SELECT * FROM info where userID = \"$_SESSION[$name]\"";
     $result = $conn->query($query);
-    if(!$result) 
-      die("Fatal error on query");
+    if(!$result) die("Fatal error on query");
+ 
     $rows = $result->num_rows;
-    if($rows > 0)
-    {
-      header('Location: ./questionSummary.php');
-    }
-    else
-      echo "<h2 class=\"text-danger\">New question failed! Try again!</h2>";
+
+    echo <<<_END
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">emailAddress</th>
+          <th scope="col">addressLine1</th>
+          <th scope="col">addressLine2</th>
+          <th scope="col">addressLine3</th>
+          <th scope="col">city</th>
+          <th scope="col">state</th>
+          <th scope="col">zip</th>
+          <th scope="col">country</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+
+    _END;
+
+    echo"<tbody>";
+
+    $row = $result->fetch_array(MYSQLI_ASSOC);
+      $ea = $row["emailAddress"];
+      $a1 = $row["addressLine1"];
+      $a2 = $row["addressLine2"];
+      $a3 = $row["addressLine3"];
+      $ci = $row["city"];
+      $st = $row["state"];
+      $zi = $row["zip"];
+      $co = $row["country"];
+      echo"<tr><td>$ea</td><td>$a1</td><td>$a2</td><td>$a3</td><td>$ci</td><td>$st</td><td>$zi</td><td>$co</td></tr>";
+
     $conn->close();
 
-    ?> 
+    echo "</tbody></table>";
+
+    ?>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

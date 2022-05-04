@@ -5,8 +5,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title> Sign up</title>
 </head>
-<body>
-	<div class= "container">
+<body style ="background-color: #53b0e9;">
+    <div class= "container-fluid">
 	<?php
 
 	
@@ -21,17 +21,23 @@
 
 	?>
 
-<form action="./signUpHandler.php" method="POST">
+<form action="./signUpHandler.php" method="POST" onsubmit="return validate(this)">
     <label for="Username">Username:</label><br>
-    <input type="text" id="Username" name="Username" ><br>
+    <input type="text" id="Username" name="Username" onblur="validateUsername(this)"><br>
+    <p id="usernamemsg"></p>
     <label for="pwd">Password:</label><br>
-    <input type="text" id="pwd" name="pwd" ><br>
+    <input type="text" id="pwd" name="pwd" onblur="validatePassword(this)"><br>
+    <p id="passwordmsg"></p>
     <label for="Name">Name:</label><br>
-    <input type="text" id="name" name="name" ><br>
+    <input type="text" id="name" name="name" onblur="validateName(this)"><br>
+    <p id="namemsg"></p>
     <label for="Email">Email:</label><br>
-    <input type="text" id="Email" name="Email" ><br>
-    <input type="submit" value="Login">
+    <input type="text" id="Email" name="Email" onblur="validateEmail(this)"><br>
+    <p id="emailmsg"></p>
+    <input type="submit" class="btn btn-primary" value="Login">
   </form>
+
+  <script type="text/javascript" src="./js/validationSignUp.js"></script>
 
 </body>
 </html>

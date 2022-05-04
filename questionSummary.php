@@ -15,8 +15,8 @@ if(!isset($_SESSION["name"]))
 
     <title>Submitted Questions</title>
   </head>
-  <body>
-    <div class = "container">
+  <body style = "background-color: #53b0e9;">
+    <div class = "container-fluid">
 
     <?php
     //create header
@@ -42,7 +42,6 @@ if(!isset($_SESSION["name"]))
     <table class="table table-hover">
       <thead>
         <tr>
-          <th scope="col">ContactID</th>
           <th scope="col">Question</th>
           <th scope="col">Time</th>
           <th scope="col">Status</th>
@@ -56,11 +55,10 @@ if(!isset($_SESSION["name"]))
     for($i=0; $i<$rows; $i++)
     {
       $row = $result->fetch_array(MYSQLI_ASSOC);
-      $cid = $row["contactID"];
       $q = $row["question"];
       $t = $row["time"];
       $s = $row["status"];
-      echo"<tr><td>$cid</td><td>$q</td><td>$t</td><td>$s</td></tr>";
+      echo"<tr><td>$q</td><td>$t</td><td>$s</td></tr>";
     }
 
     $conn->close();
