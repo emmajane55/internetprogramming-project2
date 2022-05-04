@@ -10,7 +10,7 @@
 
 	<title>Home</title>
 </head>
-<body style = "background-color: #4594c5;">
+<body style = "background-color: #53b0e9;">
 	<div class="container-fluid">
 
 	<?php
